@@ -1,8 +1,7 @@
 variable "server_name" {}
-variable "server_ip" {}
 
-resource "null_resource" "web" {
+resource "null_resource" "web_servers" {
   provisioner "local-exec" {
-    command = "echo '모듈에서 생성 : ${var.server_name} (IP: ${var.server_ip})'"
+    command = "echo 'wlcome ${var.server_name}'"
   }
 }
