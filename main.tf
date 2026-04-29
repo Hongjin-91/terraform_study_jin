@@ -1,8 +1,16 @@
-# main.tf (아주 간단한 시작)
-# 첫날은 로컬 명령어를 실행하는 것으로 감을 잡습니다.
-
-resource "null_resource" "hello_world" {
-  provisioner "local-exec" {
-    command = "echo '테라폼 실습 시작! 반갑습니다.'"
+variable "server_list" {
+  default = {
+    dev1 = { name = "dev-01", ip = "192.168.1.10" }
+    dev2  = { name = "dev-01", ip = "192.168.1.20" }
+    prod  = { name = "prod", ip = "192.168.1.30" }
+  
   }
+}
+
+module "servers" {
+  source      = "./modules/my-web-server"
+  for_each    = var.server_list
+
+  server_name = each.value.name
+  server_ip   = each.value.ip
 }
